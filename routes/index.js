@@ -45,13 +45,25 @@ module.exports = function (app,db) {
                 return next(err);
             }
             else if(!user) {
-                return res.send('user not found');
+                return res.status(400).send({
+                    status:'error',
+                    message:'user does not exist'
+                })
+                //res.send('user not found');
             }
             else{
                 if(user.password==password){
-                    return res.send('logged in');
+                    return res.send({
+                        status:'success',
+                        message:'Successfully logged in'
+                    })
+                    //res.send('logged in');
                 } else {
-                    return res.send('wrong password');
+                    return res.status(400).send({
+                        status:'error',
+                        message:'Wrong Password'
+                    })
+                    //res.send('wrong password');
                 }
             }
             req.session.user = email;

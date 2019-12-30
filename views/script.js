@@ -1,8 +1,5 @@
-
-
 async function registration() {
     try {
-        console.log('inside register try');
         let firstname = document.getElementById("firstname").value;
         let lastname = document.getElementById("lastname").value;
         let username = document.getElementById("username").value;
@@ -31,18 +28,20 @@ async function registration() {
         });
         //const myJson = await res.json();
         const myJson = res.json();
-        console.log("result is",res);
-        console.log('Success:', JSON.stringify(myJson));
-        res.redirect('login.html');
-        window.open("login.html");
+        if (res.status == 200){
+            //console.log('Success:', JSON.stringify(myJson));
+            console.log("the status is "+res.status);
+            window.location="login.html";
+        } else {
+            console.log("the status is "+res.status);
+            window.location="error.html";
+        }
     }
     catch(error){
         console.log('inside register catch');
         console.error('Error:', error);
     }
-
 }
-
 
 async function login() {
     try{
@@ -59,11 +58,19 @@ async function login() {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("result is",res);
-
+        const myJson = res.json();
+        if (res.status == 200){
+            //console.log('Success:', JSON.stringify(myJson));
+            console.log("the status is "+res.status);
+            window.location="success.html";
+        } else {
+            console.log("the status is "+res.status);
+            window.location="error.html";
+        }
+        //const myJson = res.json();
+        //console.log(JSON.stringify(myJson));
     }
     catch (error) {
         console.error('Error:', error);
     }
-
 }
