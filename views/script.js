@@ -34,7 +34,7 @@ async function registration() {
         console.log("result is",res);
         console.log('Success:', JSON.stringify(myJson));
         res.redirect('login.html');
-
+        window.open("login.html");
     }
     catch(error){
         console.log('inside register catch');
@@ -60,6 +60,7 @@ async function login() {
             }
         });
         console.log("result is",res);
+
     }
     catch (error) {
         console.error('Error:', error);
