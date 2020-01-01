@@ -1,3 +1,4 @@
+let user;
 async function registration() {
     try {
         let firstname = document.getElementById("firstname").value;
@@ -51,26 +52,24 @@ async function login() {
             email: email,
             password: password
         });
-        let res = await fetch('http://127.0.0.1:8080/user/login', {
+        await fetch('http://127.0.0.1:8080/user/login', {
             method: 'POST',
             body: data,
             headers: {
                 'Content-Type': 'application/json'
             }
+        }).then(res=> {
+            data = res.json();
+            return data;
+        })
+            .then(res=>{
+            user = res.id;
+            console.log(user);
         });
-        const myJson = res.json();
-        if (res.status == 200){
-            //console.log('Success:', JSON.stringify(myJson));
-            console.log("the status is "+res.status);
-            window.location="success.html";
-        } else {
-            console.log("the status is "+res.status);
-            window.location="error.html";
-        }
-        //const myJson = res.json();
-        //console.log(JSON.stringify(myJson));
     }
     catch (error) {
         console.error('Error:', error);
     }
 }
+
+

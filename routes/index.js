@@ -13,6 +13,7 @@ module.exports = function (app,db) {
                 username: body.username,
                 email : body.email,
                 password: body.password,
+                cards:[]
             })
                 .then(result => {
                     res.send({
@@ -54,6 +55,7 @@ module.exports = function (app,db) {
             else{
                 if(user.password==password){
                     return res.send({
+                        id:user,
                         status:'success',
                         message:'Successfully logged in'
                     })
@@ -67,7 +69,7 @@ module.exports = function (app,db) {
                 }
             }
             req.session.user = email;
-            return res.send('Logged In!');
+            return res.send(user);
         });
 
 
@@ -89,5 +91,10 @@ module.exports = function (app,db) {
             })*/
 
     });
+
+    app.put('/user/add_card', (req,res) => {
+        const body = req.body;
+        
+    })
 
 }
