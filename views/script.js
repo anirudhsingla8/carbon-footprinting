@@ -81,7 +81,7 @@ async function login() {
 // incomplete part
 async function add_Card(){
     try{
-        user_id='5e0bb2d7f268574e44248332';
+        user_id='5e131eb4ea0c191cdc06f96b';
         host_url = 'http://127.0.0.1:8080/user/add_card/';
         let link = host_url+user_id;
         let cardNumber = document.getElementById('cardNumber').value;
@@ -129,12 +129,47 @@ async function add_Card(){
     }
 }
 
-function createCards(){}
-function fetchCards(){}
+
+async function fetchCards(){
+    let data = '';
+    let user_cards;
+    let res = await fetch('http://127.0.0.1:8080/user/get_cards/5e131eb4ea0c191cdc06f96b')
+        .then(res=>{
+            data = res.json();
+            return data;
+        })
+        .then(res=>{
+            user = res.data;
+            user_cards = user[0].cards;
+            //console.log(user_cards);
+            //console.log(user_id);
+            //window.location="success.html";
+            return user_cards;
+        })
+    console.log(res);
+    return res;
+    //let UserData = res.json();
+    //console.log(UserData);
+    /*let xhr = new XMLHttpRequest();
+    //xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+            UserData = this.responseText;
+            console.log(UserData.data[0].firstName);
+        }
+    });
+    xhr.open("GET", "http://127.0.0.1:8080/user/get_cards/5e131eb4ea0c191cdc06f96b");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(data);
+    */
+}
+function createCards(user){
+    console.log(user);
+}
 
 async function displayCards(){
     let Cards = await fetchCards();
-    let AllCards = Cards.cards;
-    document.getElementById('todo-list').innerHTML= "";
-    AllCards.forEach(createCards);
+    //document.getElementById('todo-list').innerHTML= "";
+    console.log(Cards.length);
+    Cards.forEach(createCards);
 }

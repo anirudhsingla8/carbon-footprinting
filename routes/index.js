@@ -107,4 +107,31 @@ module.exports = function (app,db) {
             });
         }
     });
+
+    app.get('/user/get_cards/:id?', (req,res) => {
+        const UserId = req.params.id;
+        const userDetails = db.collection(userProfiles);
+        if (UserId){
+            const UserObj = {'_id' : new ObjectID(UserId)};
+            userDetails
+                .find(UserObj)
+                .toArray()
+                .then(data => {
+                    res.send({
+                        data:data
+                    })
+                })
+                .catch(err => {
+                    res.status(400).send({
+                        status:'error',
+                        message:err
+                    })
+                })
+        } else {
+            res.send({
+                message:'Please enter User Id'
+            })
+        }
+    })
+
 }
