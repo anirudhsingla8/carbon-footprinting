@@ -163,13 +163,71 @@ async function fetchCards(){
     xhr.send(data);
     */
 }
-function createCards(user){
-    console.log(user);
+let createTaskCard = (user) => {
+    let cardContainer = document.getElementById('card-container');
+    let card = document.createElement('div');
+    card.className = 'card shadow cursor-pointer';
+
+    let cardBody = document.createElement('div');
+    cardBody.className = 'card-body';
+
+    let title = document.createElement('h5');
+    title.innerText = user.card_number;
+    title.className = 'card-title';
+
+    let update_button = document.createElement('button')
+    update_button.innerText = 'Update Transactions';
+
+    let list = document.createElement('ul');
+    //let list_item = document.createElement('li');
+    let shopping = document.createElement('li');
+    let food = document.createElement('li');
+    food.innerText = "Food : "+user.food;
+    shopping.innerText = "Shopping : "+user.shopping;
+    //list_item.appendChild(shopping);
+    //list_item.appendChild(food);
+    list.appendChild(shopping);
+    list.appendChild(food);
+    cardBody.appendChild(title);
+    cardBody.appendChild(list);
+    cardBody.appendChild(update_button);
+    card.appendChild(cardBody);
+    cardContainer.appendChild(card);
+
+    /*let card_columns = document.getElementById('card-columns');
+    let card = document.getElementById('card');
+    let card_header =document.getElementById('card-header');
+    let cardNumber = document.getElementById('cardNumber');
+    let cardBody = document.getElementById('card-body');
+    let list = document.getElementById('expense-list');
+    let li = document.createElement('li');
+
+    cardNumber.innerText=user.card_number;
+    let shopping = document.createElement('span');
+    let food = document.createElement('span');
+    shopping.innerText = 'Shopping expense : '+user.shopping;
+    food.innerText = 'food expense : '+user.food;
+    li.appendChild(shopping);
+    li.appendChild(food);
+    list.appendChild(li);
+    cardBody.appendChild(list);
+    card_header.appendChild(cardNumber);
+    card.appendChild(card_header);
+    card.appendChild(cardBody);
+    //card_columns.appendChild(card);
+    console.log(user);*/
 }
 
 async function displayCards(){
+    /*if (cardContainer){
+        document.getElementById('card-container').replaceWith(cardContainer);
+        return;
+    }*/
+    //cardContainer = document.getElementById('card-container');
     let Cards = await fetchCards();
-    //document.getElementById('todo-list').innerHTML= "";
+
     console.log(Cards.length);
-    Cards.forEach(createCards);
-}
+    Cards.forEach((user) => {
+       createTaskCard(user);
+    });
+};
