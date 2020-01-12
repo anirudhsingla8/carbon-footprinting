@@ -81,15 +81,15 @@ async function login() {
 // incomplete part
 async function add_Card(){
     try{
-        user_id='5e131eb4ea0c191cdc06f96b';
+        /*user_id='5e131eb4ea0c191cdc06f96b';
         host_url = 'http://127.0.0.1:8080/user/add_card/';
-        let link = host_url+user_id;
+        let link = host_url+user_id;*/
         let cardNumber = document.getElementById('cardNumber').value;
         let CVV = document.getElementById('CVV').value;
         let expiryYear = document.getElementById('expiryYear').value;
         let food = 0;
         let shopping = 0;
-        console.log('inside add_card',link);
+        console.log('inside add_card');
         let data = JSON.stringify({
             card_number:cardNumber,
             CVV:CVV,
@@ -98,7 +98,6 @@ async function add_Card(){
             food:food
         });
         let xhr = new XMLHttpRequest();
-        //xhr.withCredentials = true;
 
         xhr.addEventListener("readystatechange", function() {
             if(this.readyState === 4) {
@@ -110,19 +109,7 @@ async function add_Card(){
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.send(data);
-        /*console.log(data);
-        await fetch(link, {
-            method: 'PUT',
-            body: data,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res=>{
-            data = res.json();
-            return data;
-        }).then(res=>{
-            console.log(res);
-        });*/
+
     }
     catch (error) {
         console.error('Error:', error);
@@ -131,6 +118,7 @@ async function add_Card(){
 
 
 async function fetchCards(){
+
     let data = '';
     let user_cards;
     let res = await fetch('http://127.0.0.1:8080/user/get_cards/5e131eb4ea0c191cdc06f96b')
@@ -141,28 +129,95 @@ async function fetchCards(){
         .then(res=>{
             user = res.data;
             user_cards = user[0].cards;
-            //console.log(user_cards);
-            //console.log(user_id);
-            //window.location="success.html";
+
             return user_cards;
         })
     console.log(res);
     return res;
-    //let UserData = res.json();
-    //console.log(UserData);
-    /*let xhr = new XMLHttpRequest();
-    //xhr.withCredentials = true;
-    xhr.addEventListener("readystatechange", function() {
-        if(this.readyState === 4) {
-            UserData = this.responseText;
-            console.log(UserData.data[0].firstName);
-        }
-    });
-    xhr.open("GET", "http://127.0.0.1:8080/user/get_cards/5e131eb4ea0c191cdc06f96b");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(data);
-    */
+
 }
+
+async function update_details(){
+    console.log('Clicked');
+    try {
+        let card_number = document.getElementById('cardNumber').value;
+        let shopping_expense = document.getElementById('shoppingExpense').value;
+        let food_expense = document.getElementById('foodExpense').value;
+        let data = JSON.stringify({
+            card_number: card_number,
+            shopping: shopping_expense,
+            food: food_expense
+        });
+        let xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+        xhr.open("PUT", "http://127.0.0.1:8080/user/update_card/5e131eb4ea0c191cdc06f96b");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(data);
+    }catch(error){
+        console.error('Error:', error);
+    }
+    /*
+    let my_modal = document.getElementById('myModal');
+    let modal_dialog = document.createElement('div');
+    modal_dialog.className='modal-dialog';
+    let modal_content = document.createElement('div');
+    modal_content.className='modal-content';
+    let modal_header = document.createElement('div');
+    modal_header.className='modal-header';
+    let modal_body = document.createElement('div');
+    modal_body.className='modal-body';
+    let modal_footer = document.createElement('div');
+    modal_footer.className='modal-footer';
+    let update_button=document.createElement('button');
+    update_button.innerText='update';
+
+    modal_footer.appendChild(update_button);
+    modal_content.appendChild(modal_header);
+    modal_content.appendChild(modal_body);
+    modal_content.appendChild(modal_footer);
+    modal_dialog.appendChild(modal_content);
+    my_modal.appendChild(modal_dialog);*/
+
+    /*
+    let modal_dialog = document.getElementsByClassName('modal-dialog');
+    //modal_dialog.className='modal-dialog';
+    let modal_content = document.getElementsByClassName('modal-content');
+    //modal_content.className='modal-content';
+    let modal_header = document.getElementsByClassName('modal-header');
+    //modal_header.className='modal-header';
+    let modal_footer = document.getElementsByClassName('modal-footer');
+    //modal_footer.className='modal-footer';
+    let header_content = document.createElement('p');
+    header_content.innerText='Update';
+    modal_header.appendChild(header_content);
+    let modal_body = document.getElementById('modal-body');
+    modal_body.className='modal-body';
+    let shopping_input = document.createElement('input');
+    let food_input = document.createElement('input');
+    shopping_input.placeholder='Enter new shopping expense';
+    food_input.placeholder='Enter new food expense';
+    modal_body.appendChild(shopping_input);
+    modal_body.appendChild(food_input);
+    let update_button = document.createElement('button');
+    update_button.className='btn btn-primary';
+    update_button.innerText='Update';
+    update_button.setAttribute('data-dismiss','modal');
+    update_button.setAttribute('onclick','update_result()');
+    modal_footer.appendChild(update_button);
+    modal_content.appendChild(modal_header);
+    modal_content.appendChild(modal_body);
+    modal_content.appendChild(modal_footer);
+    modal_dialog.appendChild(modal_content);
+    //my_modal.appendChild(modal_dialog);
+
+     */
+}
+
 let createTaskCard = (user) => {
     let cardContainer = document.getElementById('card-container');
     let card = document.createElement('div');
@@ -171,61 +226,35 @@ let createTaskCard = (user) => {
     let cardBody = document.createElement('div');
     cardBody.className = 'card-body';
 
-    let title = document.createElement('h5');
+    let title = document.createElement('h2');
     title.innerText = user.card_number;
     title.className = 'card-title';
+    //title.style.fontSize='25px';
 
     let update_button = document.createElement('button')
     update_button.innerText = 'Update Transactions';
-
-    let list = document.createElement('ul');
-    //let list_item = document.createElement('li');
+    update_button.setAttribute('onclick','update_details()');
+    /*let list = document.createElement('ul');
     let shopping = document.createElement('li');
-    let food = document.createElement('li');
+    let food = document.createElement('li');*/
+    let shopping = document.createElement('h4');
+    let food = document.createElement('h4');
     food.innerText = "Food : "+user.food;
     shopping.innerText = "Shopping : "+user.shopping;
-    //list_item.appendChild(shopping);
-    //list_item.appendChild(food);
-    list.appendChild(shopping);
-    list.appendChild(food);
+
     cardBody.appendChild(title);
-    cardBody.appendChild(list);
-    cardBody.appendChild(update_button);
+    //cardBody.appendChild(list);
+    cardBody.appendChild(shopping);
+    cardBody.appendChild(food);
+    //cardBody.appendChild(update_button);
     card.appendChild(cardBody);
     cardContainer.appendChild(card);
-
-    /*let card_columns = document.getElementById('card-columns');
-    let card = document.getElementById('card');
-    let card_header =document.getElementById('card-header');
-    let cardNumber = document.getElementById('cardNumber');
-    let cardBody = document.getElementById('card-body');
-    let list = document.getElementById('expense-list');
-    let li = document.createElement('li');
-
-    cardNumber.innerText=user.card_number;
-    let shopping = document.createElement('span');
-    let food = document.createElement('span');
-    shopping.innerText = 'Shopping expense : '+user.shopping;
-    food.innerText = 'food expense : '+user.food;
-    li.appendChild(shopping);
-    li.appendChild(food);
-    list.appendChild(li);
-    cardBody.appendChild(list);
-    card_header.appendChild(cardNumber);
-    card.appendChild(card_header);
-    card.appendChild(cardBody);
-    //card_columns.appendChild(card);
-    console.log(user);*/
 }
 
-async function displayCards(){
-    /*if (cardContainer){
-        document.getElementById('card-container').replaceWith(cardContainer);
-        return;
-    }*/
-    //cardContainer = document.getElementById('card-container');
-    let Cards = await fetchCards();
 
+
+async function displayCards(){
+    let Cards = await fetchCards();
     console.log(Cards.length);
     Cards.forEach((user) => {
        createTaskCard(user);

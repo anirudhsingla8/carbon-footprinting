@@ -1,15 +1,15 @@
 const express = require('express');
 const mongodb = require('mongodb');
 const routes = require('./routes/index.js');
-const session = require('client-sessions');
+const session = require('express-session');
 const app = express()
 app.use(express.json())
 
-//use sessions for tracking logins
+//use sessions for tracking login
 app.use(session({
     secret: 'work hard',
-    resave: true,
-    saveUninitialized: false
+    resave: false,
+    saveUninitialized: true
 }));
 
 const DB_URI = 'mongodb+srv://anirudh:rj13sl1608@cluster0-lcda6.mongodb.net/test?retryWrites=true&w=majority';

@@ -8,27 +8,38 @@
     <title>Title</title>
 </head>
 <body>
-    <button onclick="window.location.href='add_card.html'">Add Card Details</button>
-    <button onclick="window.location.href='update.html'">Update Expense</button>
-    <button onclick="displayCards();">Fetch cards</button>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-secondary" onclick="window.location.href='add_card.html'">Add new Card</button>
+            <button class="btn btn-secondary" onclick="window.location.href='update_expense.html'">Update Expense</button>
+            <button class="btn btn-info" onclick="displayCards();">Fetch cards</button>
+        </div>
+        <div class="col-md-4">
+            <div class="card-container" id="card-container"></div>
+        </div>
+        <div class="modal" id="myModal">
+            modal
+            <!--
+            <div class="modal-dialog" id="modal-dialog">
+                <div class="modal-content" id="modal-content">
 
 
-    <div class="card-container" id="card-container">
-        <!--<div class="card-columns" id="card-columns">
-            <div class="card" id="card">
-                <div class="card-header" id="card-header">
-                    <span id="cardNumber"></span>
+                    <div class="modal-header" id="modal-header">
+
+                    </div>
+
+                    <div class="modal-body" id="modal-body">
+                    </div>
+
+
+                    <div class="modal-footer" id="modal-footer">
+                    </div>
+
                 </div>
-                <div class="card-body" id="card-body">
-                    <ul id="expense-list" style="list-style: none;text-align: left;margin-left: 0;">
-                        <li style="text-align: left"></li>
-                    </ul>
-                </div>
-                <div class="card-footer">Footer</div>
             </div>
-        </div>-->
+            -->
+        </div>
+
     </div>
-
-
 </body>
 </html>
