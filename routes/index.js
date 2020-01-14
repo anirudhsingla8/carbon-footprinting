@@ -186,7 +186,7 @@ module.exports = function (app,db) {
         }
     });
 
-    app.get('/dashboard', function (req, res) {
+    app.get('/dashboard', function (req, res) => {
         if (!req.session.user) {
             return res.status(401).send();
         }
