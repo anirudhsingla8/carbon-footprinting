@@ -38,6 +38,7 @@ module.exports = function (app,db) {
     });
 
     // login for user
+    //todo
     app.post('/user/login', (req, res, next) => {
         const body = req.body;
         let email = body.email;
@@ -185,7 +186,9 @@ module.exports = function (app,db) {
             });
         }
     });
-
+    
+    
+    //todo
     app.get('/dashboard', function (req, res) => {
         if (!req.session.user) {
             return res.status(401).send();
