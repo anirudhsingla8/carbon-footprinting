@@ -1,6 +1,28 @@
 let user;
 let user_id;
 let host_url;
+
+//todo
+async function fetchUserId(){
+    let cookie = document.cookie;
+    let res = await fetch('http://127.0.0.1:8080/user/dashboard',
+        {redirect: 'follow',
+            headers:{
+                "Cookie":cookie
+            }});
+    let userJson = await res.json();
+    console.log(res);
+    console.log(userJson);
+    //return userJson;
+};
+
+async function showUserInfo(){
+    let user = await fetchUserDetails();
+    console.log('the result from dashboard is',user);
+
+}
+
+
 async function registration() {
     try {
         let firstname = document.getElementById("firstname").value;
@@ -46,6 +68,8 @@ async function registration() {
     }
 }
 
+
+// todo
 async function login() {
     try{
     let email = document.getElementById("email").value;
