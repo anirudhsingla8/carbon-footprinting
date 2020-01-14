@@ -23,6 +23,11 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.get('/', (req,res) => {
+    console.log(req);
+    res.send('you hit the home page');
+    });
+
 
 mongodb.MongoClient.connect(DB_URI, (error, dbClient) => {
     if(error) {
